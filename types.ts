@@ -1,11 +1,12 @@
-export type CardItemT = {
-  description?: string;
-  hasActions?: boolean;
-  hasVariant?: boolean;
-  image: any;
-  isOnline?: boolean;
-  matches?: string;
+export type ChristmasOutfitT = {
+  id: number;
   name: string;
+  description: string;
+  image: any;
+  votes: number;
+  category: string; // "Ugly Sweater" | "Party Outfit" | "Casual Christmas"
+  submittedBy: string;
+  dateSubmitted: string;
 };
 
 export type IconT = {
@@ -15,41 +16,8 @@ export type IconT = {
   style?: any;
 };
 
-export type MessageT = {
-  image: any;
-  lastMessage: string;
-  name: string;
-};
-
-export type ProfileItemT = {
-  age?: string;
-  info1?: string;
-  info2?: string;
-  info3?: string;
-  info4?: string;
-  location?: string;
-  matches: string;
-  name: string;
-};
-
 export type TabBarIconT = {
   focused: boolean;
   iconName: any;
   text: string;
-};
-
-export type DataT = {
-  id: number;
-  name: string;
-  isOnline: boolean;
-  match: string;
-  description: string;
-  message: string;
-  image: any;
-  age?: string;
-  info1?: string;
-  info2?: string;
-  info3?: string;
-  info4?: string;
-  location?: string;
 };

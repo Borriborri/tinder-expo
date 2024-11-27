@@ -1,99 +1,136 @@
 import React from "react";
-import { Text, View, Image, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
 import Icon from "./Icon";
-import { CardItemT } from "../types";
-import styles, {
-  DISLIKE_ACTIONS,
-  FLASH_ACTIONS,
-  LIKE_ACTIONS,
-  STAR_ACTIONS,
-  WHITE,
-} from "../assets/styles";
+import { PRIMARY_COLOR, SECONDARY_COLOR, WHITE } from "../assets/styles";
+import { ChristmasOutfitT } from "../types";
 
 const CardItem = ({
   description,
   hasActions,
-  hasVariant,
   image,
-  isOnline,
-  matches,
   name,
-}: CardItemT) => {
-  // Custom styling
+  category,
+  votes,
+}: ChristmasOutfitT & { hasActions?: boolean }) => {
   const fullWidth = Dimensions.get("window").width;
 
-  const imageStyle = [
-    {
-      borderRadius: 8,
-      width: hasVariant ? fullWidth / 2 - 30 : fullWidth - 80,
-      height: hasVariant ? 170 : 350,
-      margin: hasVariant ? 0 : 20,
-    },
-  ];
-
-  const nameStyle = [
-    {
-      paddingTop: hasVariant ? 10 : 15,
-      paddingBottom: hasVariant ? 5 : 7,
-      color: "#363636",
-      fontSize: hasVariant ? 15 : 30,
-    },
-  ];
-
   return (
-    <View style={styles.containerCardItem}>
-      {/* IMAGE */}
-      <Image source={image} style={imageStyle} />
+    <View style={styles.container}>
+      <Image source={image} style={styles.image} />
+      
+      <View style={styles.categoryBadge}>
+        <Icon name="snow" size={14} color={WHITE} />
+        <Text style={styles.categoryText}>{category}</Text>
+      </View>
 
-      {/* MATCHES */}
-      {matches && (
-        <View style={styles.matchesCardItem}>
-          <Text style={styles.matchesTextCardItem}>
-            <Icon name="heart" color={WHITE} size={13} /> {matches}% Match!
-          </Text>
+      <View style={styles.infoContainer}>
+        <View style={styles.headerRow}>
+          <Text style={styles.name}>{name}</Text>
+          <View style={styles.voteBadge}>
+            <Icon name="heart" size={16} color={PRIMARY_COLOR} />
+            <Text style={styles.voteCount}>{votes} votes</Text>
+          </View>
         </View>
-      )}
+        <Text style={styles.description}>{description}</Text>
+      </View>
 
-      {/* NAME */}
-      <Text style={nameStyle}>{name}</Text>
-
-      {/* DESCRIPTION */}
-      {description && (
-        <Text style={styles.descriptionCardItem}>{description}</Text>
-      )}
-
-      {/* STATUS */}
-      {!description && (
-        <View style={styles.status}>
-          <View style={isOnline ? styles.online : styles.offline} />
-          <Text style={styles.statusText}>
-            {isOnline ? "Online" : "Offline"}
-          </Text>
-        </View>
-      )}
-
-      {/* ACTIONS */}
       {hasActions && (
-        <View style={styles.actionsCardItem}>
-          <TouchableOpacity style={styles.miniButton}>
-            <Icon name="star" color={STAR_ACTIONS} size={14} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button}>
-            <Icon name="heart" color={LIKE_ACTIONS} size={25} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button}>
-            <Icon name="close" color={DISLIKE_ACTIONS} size={25} />
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.miniButton}>
-            <Icon name="flash" color={FLASH_ACTIONS} size={14} />
-          </TouchableOpacity>
+        <View style={styles.instructions}>
+          <Text style={styles.instructionText}>
+            👎 Swipe to vote 👍
+          </Text>
         </View>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: WHITE,
+    borderRadius: 8,
+    alignItems: "center",
+    margin: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  image: {
+    width: Dimensions.get("window").width - 80,
+    height: 350,
+    borderRadius: 8,
+  },
+  categoryBadge: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: PRIMARY_COLOR,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  categoryText: {
+    color: WHITE,
+    marginLeft: 4,
+    fontWeight: '600',
+  },
+  infoContainer: {
+    padding: 15,
+    width: '100%',
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: PRIMARY_COLOR,
+  },
+  description: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 5,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  votes: {
+    marginLeft: 5,
+    color: PRIMARY_COLOR,
+    fontWeight: '600',
+  },
+  instructions: {
+    paddingVertical: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    width: '100%',
+  },
+  instructionText: {
+    textAlign: 'center',
+    color: '#666',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  voteBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    padding: 8,
+    borderRadius: 16,
+  },
+  voteCount: {
+    marginLeft: 5,
+    color: PRIMARY_COLOR,
+    fontWeight: 'bold',
+    fontSize: 16,
+  }
+});
 
 export default CardItem;

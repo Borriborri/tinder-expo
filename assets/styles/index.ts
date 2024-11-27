@@ -1,19 +1,16 @@
 import { StyleSheet, Dimensions } from "react-native";
 
-export const PRIMARY_COLOR = "#7444C0";
-export const SECONDARY_COLOR = "#5636B8";
+export const PRIMARY_COLOR = "#C41E3A";
+export const SECONDARY_COLOR = "#228B22";
 export const WHITE = "#FFFFFF";
 export const GRAY = "#757E90";
 export const DARK_GRAY = "#363636";
 export const BLACK = "#000000";
+export const GOLD = "#FFD700";
 
-export const ONLINE_STATUS = "#46A575";
-export const OFFLINE_STATUS = "#D04949";
-
-export const STAR_ACTIONS = "#FFA200";
-export const LIKE_ACTIONS = "#B644B2";
-export const DISLIKE_ACTIONS = "#363636";
-export const FLASH_ACTIONS = "#5028D7";
+export const FAVORITE_COLOR = "#FFD700";
+export const VOTE_UP_COLOR = "#228B22";
+export const VOTE_DOWN_COLOR = "#C41E3A";
 
 export const DIMENSION_WIDTH = Dimensions.get("window").width;
 export const DIMENSION_HEIGHT = Dimensions.get("window").height;
@@ -57,14 +54,14 @@ export default StyleSheet.create({
   online: {
     width: 6,
     height: 6,
-    backgroundColor: ONLINE_STATUS,
+    backgroundColor: FAVORITE_COLOR,
     borderRadius: 3,
     marginRight: 4,
   },
   offline: {
     width: 6,
     height: 6,
-    backgroundColor: OFFLINE_STATUS,
+    backgroundColor: VOTE_DOWN_COLOR,
     borderRadius: 3,
     marginRight: 4,
   },
@@ -299,4 +296,24 @@ export default StyleSheet.create({
   iconMenu: {
     alignItems: "center",
   },
+
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  voteBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    padding: 8,
+    borderRadius: 16,
+  },
+  voteCount: {
+    marginLeft: 5,
+    color: PRIMARY_COLOR,
+    fontWeight: 'bold',
+    fontSize: 16,
+  }
 });
