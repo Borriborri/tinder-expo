@@ -1,3 +1,23 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const updateChristmasOutfits = async (newOutfit: any) => {
+  try {
+    const storedOutfits = await AsyncStorage.getItem('CHRISTMAS_OUTFITS');
+    let currentOutfits = storedOutfits ? JSON.parse(storedOutfits) : CHRISTMAS_OUTFITS;
+    if (!Array.isArray(currentOutfits)) {
+      currentOutfits = CHRISTMAS_OUTFITS;
+    }
+    
+    const updatedOutfits = [newOutfit, ...currentOutfits];
+    await AsyncStorage.setItem('CHRISTMAS_OUTFITS', JSON.stringify(updatedOutfits));
+    
+    return updatedOutfits;
+  } catch (error) {
+    console.error('Failed to update Christmas outfits:', error);
+    throw error;
+  }
+};
+
 const CHRISTMAS_OUTFITS = [
   {
     id: 1,
@@ -51,4 +71,5 @@ const CHRISTMAS_OUTFITS = [
   },
 ];
 
+export { CHRISTMAS_OUTFITS };
 export default CHRISTMAS_OUTFITS; 

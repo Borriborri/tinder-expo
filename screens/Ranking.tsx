@@ -14,26 +14,33 @@ const RankingScreen = ({ navigation }) => {
       try {
         const storedOutfits = await AsyncStorage.getItem('CHRISTMAS_OUTFITS');
         if (storedOutfits) {
-          setOutfits(JSON.parse(storedOutfits));
+          const parsedOutfits = JSON.parse(storedOutfits);
+          setOutfits(parsedOutfits);
         }
       } catch (error) {
         console.error('Failed to load votes:', error);
       }
     };
 
-    const unsubscribe = navigation.addListener('focus', () => {
-      loadVotes();
-    });
+    // Load votes immediately
+    loadVotes();
 
-    return unsubscribe;
-  }, [navigation]);
+    // Set up an interval to refresh votes
+    const interval = setInterval(loadVotes, 1000);
+
+    // Clean up interval on unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const sortedOutfits = [...outfits].sort((a, b) => b.votes - a.votes);
 
   const renderItem = ({ item, index }: { item: any; index: number }) => (
     <View style={styles.rankingItem}>
       <Text style={styles.rank}>#{index + 1}</Text>
-      <Image source={item.image} style={styles.thumbnail} />
+      <Image 
+        source={typeof item.image === 'object' && 'uri' in item.image ? item.image : item.image} 
+        style={styles.thumbnail} 
+      />
       <View style={styles.outfitInfo}>
         <Text style={styles.outfitName}>{item.name}</Text>
         <Text style={styles.category}>{item.category}</Text>

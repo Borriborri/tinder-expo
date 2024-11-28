@@ -16,7 +16,17 @@ const CardItem = ({
 
   return (
     <View style={styles.container}>
-      <Image source={image} style={styles.image} />
+      <Image 
+        source={
+          typeof image === 'object' && 'uri' in image 
+            ? image.uri.startsWith('data:') 
+              ? { uri: image.uri }
+              : image
+            : image
+        } 
+        style={styles.image}
+        resizeMode="cover"
+      />
       
       <View style={styles.categoryBadge}>
         <Icon name="snow" size={14} color={WHITE} />

@@ -2,7 +2,7 @@ export type ChristmasOutfitT = {
   id: number;
   name: string;
   description: string;
-  image: any;
+  image: { uri: string } | number;
   votes: number;
   category: string; // "Ugly Sweater" | "Party Outfit" | "Casual Christmas"
   submittedBy: string;
